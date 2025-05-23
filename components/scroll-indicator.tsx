@@ -11,7 +11,6 @@ export function ScrollIndicator() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1, duration: 0.8 }}
     >
-      <span className="text-sm text-zinc-500 mb-2">Scroll to explore</span>
       <motion.div
         animate={{
           y: [0, 8, 0],

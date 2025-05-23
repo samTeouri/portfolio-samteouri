@@ -32,16 +32,16 @@ export default function Home() {
 
       {/* Navigation */}
       <header className="sticky top-0 z-40 w-full border-b border-zinc-800/50 glass backdrop-blur-md">
-        <div className="container flex h-16 items-center justify-between">
+        <div className="container flex h-16 items-center justify-between px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="font-bold text-xl"
+            className="font-bold text-lg sm:text-xl"
           >
             <span className="text-gradient glow-text">Samrou</span> TEOURI
           </motion.div>
-          <nav className="flex items-center gap-6 text-sm">
+          <nav className="flex items-center gap-3 sm:gap-6 text-xs sm:text-sm">
             {["About", "Projects", "Skills", "Contact"].map((item, i) => (
               <motion.div
                 key={item}
@@ -71,9 +71,9 @@ export default function Home() {
           <div className="container relative z-10">
             <HeroAnimation />
             <motion.div className="flex flex-col items-center gap-8 md:flex-row md:gap-16" style={{ opacity, scale }}>
-              <div className="w-full md:w-1/2 space-y-4">
+              <div className="w-full md:w-1/2 space-y-4 text-center md:text-left">
                 <motion.h1
-                  className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl"
+                  className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7 }}
@@ -81,7 +81,7 @@ export default function Home() {
                   Hi, I'm <span className="text-gradient glow-text">Samrou TEOURI</span>
                 </motion.h1>
                 <motion.p
-                  className="text-xl text-zinc-400"
+                  className="text-lg sm:text-xl text-zinc-400"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.7, delay: 0.2 }}
@@ -89,28 +89,33 @@ export default function Home() {
                   A passionate full-stack developer creating innovative web solutions
                 </motion.p>
                 <motion.div
-                  className="flex gap-4"
+                  className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
                 >
                   <Button
                     scrollToContact
-                    className="bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 border-0 glow-red-sm hover:glow-red pulse-animation"
+                    className="w-full sm:w-auto bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 border-0 glow-red-sm hover:glow-red pulse-animation"
                   >
                     Contact Me <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
-                  <Link href="https://cvdesignr.com/p/D0olpbKljrRmoVn" target="_blank" rel="noopener noreferrer">
+                  <Link
+                    href="https://cvdesignr.com/p/D0olpbKljrRmoVn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto"
+                  >
                     <Button
                       variant="outline"
-                      className="border-zinc-800 hover:bg-zinc-900 hover:border-red-900 transition-all duration-300"
+                      className="w-full sm:w-auto border-zinc-800 hover:bg-zinc-900 hover:border-red-900 transition-all duration-300"
                     >
                       View Resume <ExternalLink className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
                 </motion.div>
                 <motion.div
-                  className="flex gap-4 pt-4"
+                  className="flex gap-4 pt-4 justify-center md:justify-start"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.6 }}
@@ -141,7 +146,7 @@ export default function Home() {
                 </motion.div>
               </div>
               <motion.div
-                className="w-full md:w-1/2"
+                className="w-full md:w-1/2 max-w-[300px] mx-auto md:max-w-none"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{
@@ -171,11 +176,13 @@ export default function Home() {
           </div>
           <div className="container">
             <AnimatedTitle>
-              <div className="flex flex-col items-center justify-center gap-4 text-center">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+              <div className="flex flex-col items-center justify-center gap-2 sm:gap-4 text-center">
+                <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl lg:text-5xl">
                   My <span className="text-gradient glow-text">Projects</span>
                 </h2>
-                <p className="max-w-[700px] text-zinc-400">Check out some of my recent work and personal projects</p>
+                <p className="max-w-[700px] text-sm sm:text-base text-zinc-400 px-4 sm:px-0">
+                  Check out some of my recent work and personal projects
+                </p>
               </div>
             </AnimatedTitle>
 
@@ -285,11 +292,11 @@ export default function Home() {
               </div>
             </AnimatedTitle>
 
-            <div className="mx-auto mt-12 grid max-w-4xl gap-8 md:grid-cols-2">
+            <div className="mx-auto mt-8 sm:mt-12 grid max-w-4xl gap-6 sm:gap-8 px-4 sm:px-6 md:px-0 md:grid-cols-2">
               <AnimatedSection delay={0.2}>
                 <GlassCard glowEffect={true} className="h-full">
-                  <h3 className="text-xl font-bold mb-6">Contact Information</h3>
-                  <div className="space-y-4">
+                  <h3 className="text-xl font-bold mb-4 sm:mb-6">Contact Information</h3>
+                  <div className="space-y-3 sm:space-y-4">
                     {[
                       { icon: Mail, text: "teourisamrou@gmail.com", href: "mailto:teourisamrou@gmail.com" },
                       {
@@ -307,14 +314,14 @@ export default function Home() {
                           transition: { type: "spring", stiffness: 400, damping: 10 },
                         }}
                       >
-                        <div className="h-10 w-10 rounded-full bg-red-950/30 flex items-center justify-center glow-red-sm">
-                          <item.icon className="h-5 w-5 text-red-500" />
+                        <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-red-950/30 flex items-center justify-center glow-red-sm">
+                          <item.icon className="h-4 w-4 sm:h-5 sm:w-5 text-red-500" />
                         </div>
                         <Link
                           href={item.href}
                           target={item.href.startsWith("http") ? "_blank" : undefined}
                           rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                          className="hover:text-red-400 transition-colors"
+                          className="hover:text-red-400 transition-colors text-sm sm:text-base truncate"
                         >
                           {item.text}
                         </Link>
@@ -335,9 +342,9 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-800/50 glass-dark py-6">
-        <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
-          <p className="text-center text-sm text-zinc-400 md:text-left">
+      <footer className="border-t border-zinc-800/50 glass-dark py-4 sm:py-6">
+        <div className="container flex flex-col items-center justify-between gap-3 sm:gap-4 md:flex-row px-4 sm:px-6">
+          <p className="text-center text-xs sm:text-sm text-zinc-400 md:text-left">
             © {new Date().getFullYear()} Samrou TEOURI. All rights reserved.
           </p>
           <div className="flex gap-4">
@@ -353,7 +360,7 @@ export default function Home() {
                   rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="text-zinc-400 hover:text-red-500 transition-colors duration-300"
                 >
-                  <Icon className="h-5 w-5" />
+                  <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
                   <span className="sr-only">{Icon.name}</span>
                 </Link>
               </motion.div>

@@ -12,7 +12,7 @@ export function GlassCard({ children, className, glowEffect = false, hoverEffect
   return (
     <div
       className={cn(
-        "glass-card rounded-lg p-6 transition-all duration-300",
+        "glass-card rounded-lg p-4 sm:p-6 transition-all duration-300",
         glowEffect && "glow-red-sm",
         hoverEffect && "hover:glow-red hover:-translate-y-1",
         className,
