@@ -14,20 +14,27 @@ import { ParallaxBackground } from "@/components/parallax-background"
 import { ScrollProgress } from "@/components/scroll-progress"
 import { GlassCard } from "@/components/glass-card"
 import { ContactForm } from "@/components/contact-form"
+import { useMobile } from "@/hooks/use-mobile"
+import { SimpleBackgroundObjects } from "@/components/simple-background-objects"
+import { ProjectIcon } from "@/components/project-icons"
 
 export default function Home() {
   const containerRef = useRef(null)
+  const isMobile = useMobile()
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   })
 
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.8])
+  // Disable parallax transforms on mobile
+  const opacity = useTransform(scrollYProgress, [0, 0.2], isMobile ? [1, 1] : [1, 0])
+  const scale = useTransform(scrollYProgress, [0, 0.2], isMobile ? [1, 1] : [1, 0.8])
 
   return (
     <div ref={containerRef} className="flex min-h-screen flex-col bg-black text-white">
       <ParallaxBackground />
+      <SimpleBackgroundObjects />
       <ScrollProgress />
 
       {/* Navigation */}
@@ -36,7 +43,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: isMobile ? 0.3 : 0.5 }}
             className="font-bold text-lg sm:text-xl"
           >
             <span className="text-gradient glow-text">Samrou</span> TEOURI
@@ -47,11 +54,11 @@ export default function Home() {
                 key={item}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.1 * i }}
+                transition={{ duration: isMobile ? 0.2 : 0.3, delay: 0.1 * i }}
               >
                 <Link
                   href={`#${item.toLowerCase()}`}
-                  className="transition-colors hover:text-red-600 animated-underline"
+                  className="transition-colors hover:text-cyan-600 animated-underline"
                 >
                   {item}
                 </Link>
@@ -65,18 +72,21 @@ export default function Home() {
         {/* Hero Section */}
         <section id="about" className="relative overflow-hidden min-h-[calc(100vh-4rem)] flex items-center pt-0">
           <div className="absolute inset-0 bg-black -z-10">
-            <div className="absolute inset-0 opacity-40 bg-gradient-to-br from-red-950/50 via-black to-black"></div>
+            <div className="absolute inset-0 opacity-40 bg-gradient-to-br from-cyan-950/50 via-black to-black"></div>
             <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-black to-transparent"></div>
           </div>
           <div className="container relative z-10">
             <HeroAnimation />
-            <motion.div className="flex flex-col items-center gap-8 md:flex-row md:gap-16" style={{ opacity, scale }}>
+            <motion.div
+              className="flex flex-col items-center gap-8 md:flex-row md:gap-16"
+              style={isMobile ? {} : { opacity, scale }}
+            >
               <div className="w-full md:w-1/2 space-y-4 text-center md:text-left">
                 <motion.h1
                   className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl"
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7 }}
+                  transition={{ duration: isMobile ? 0.5 : 0.7 }}
                 >
                   Hi, I'm <span className="text-gradient glow-text">Samrou TEOURI</span>
                 </motion.h1>
@@ -84,19 +94,19 @@ export default function Home() {
                   className="text-lg sm:text-xl text-zinc-400"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.7, delay: 0.2 }}
+                  transition={{ duration: isMobile ? 0.5 : 0.7, delay: 0.2 }}
                 >
                   A passionate full-stack developer creating innovative web solutions
                 </motion.p>
                 <motion.div
                   className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
+                  transition={{ duration: isMobile ? 0.3 : 0.5, delay: 0.4 }}
                 >
                   <Button
                     scrollToContact
-                    className="w-full sm:w-auto bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 border-0 glow-red-sm hover:glow-red pulse-animation"
+                    className={`w-full sm:w-auto bg-gradient-to-r from-cyan-700 to-cyan-600 hover:from-cyan-600 hover:to-cyan-500 border-0 glow-cyan-sm hover:glow-cyan ${!isMobile ? "pulse-animation" : ""}`}
                   >
                     Contact Me <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
@@ -108,7 +118,7 @@ export default function Home() {
                   >
                     <Button
                       variant="outline"
-                      className="w-full sm:w-auto border-zinc-800 hover:bg-zinc-900 hover:border-red-900 transition-all duration-300"
+                      className="w-full sm:w-auto border-zinc-800 hover:bg-zinc-900 hover:border-cyan-900 transition-all duration-300"
                     >
                       View Resume <ExternalLink className="ml-2 h-4 w-4" />
                     </Button>
@@ -118,7 +128,7 @@ export default function Home() {
                   className="flex gap-4 pt-4 justify-center md:justify-start"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.6 }}
+                  transition={{ duration: isMobile ? 0.3 : 0.5, delay: 0.6 }}
                 >
                   {[
                     { icon: Github, href: "https://github.com/samTeouri" },
@@ -127,16 +137,20 @@ export default function Home() {
                   ].map((item, i) => (
                     <motion.div
                       key={i}
-                      whileHover={{
-                        scale: 1.1,
-                        transition: { duration: 0.2 },
-                      }}
+                      whileHover={
+                        isMobile
+                          ? {}
+                          : {
+                              scale: 1.1,
+                              transition: { duration: 0.2 },
+                            }
+                      }
                     >
                       <Link
                         href={item.href}
                         target={item.href.startsWith("http") ? "_blank" : undefined}
                         rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                        className="text-zinc-400 hover:text-red-500 transition-colors duration-300 flex items-center justify-center h-10 w-10 rounded-full hover:bg-red-950/20"
+                        className="text-zinc-400 hover:text-cyan-500 transition-colors duration-300 flex items-center justify-center h-10 w-10 rounded-full hover:bg-cyan-950/20"
                       >
                         <item.icon className="h-6 w-6" />
                         <span className="sr-only">{item.icon.name}</span>
@@ -150,13 +164,13 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{
-                  duration: 0.7,
+                  duration: isMobile ? 0.5 : 0.7,
                   delay: 0.3,
                   type: "spring",
                   stiffness: 100,
                 }}
               >
-                <div className="aspect-square rounded-full gradient-red-to-black p-1 glow-red">
+                <div className="aspect-square rounded-full gradient-cyan-to-black p-1 glow-cyan">
                   <div className="h-full w-full rounded-full bg-zinc-900/50 glass-dark p-4">
                     <div className="h-full w-full rounded-full bg-zinc-800/50 glass flex items-center justify-center text-6xl font-bold">
                       ST
@@ -188,39 +202,41 @@ export default function Home() {
 
             <div className="grid grid-cols-1 gap-6 mt-12 md:grid-cols-2 lg:grid-cols-3">
               {projects.map((project, index) => (
-                <AnimatedSection key={index} delay={index * 0.1}>
-                  <motion.div whileHover={{ y: -10, transition: { duration: 0.3 } }} className="h-full">
-                    <GlassCard glowEffect={true} hoverEffect={true} className="h-full">
-                      <div className="aspect-video w-full bg-zinc-800/50 relative group rounded-md overflow-hidden mb-4">
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-4">
+                <AnimatedSection key={index} delay={index * (isMobile ? 0.05 : 0.1)}>
+                  <motion.div whileHover={isMobile ? {} : { y: -10, transition: { duration: 0.3 } }} className="h-full">
+                    <GlassCard glowEffect={!isMobile} hoverEffect={!isMobile} className="h-full">
+                      <div className="aspect-video w-full bg-zinc-800/50 relative group rounded-md overflow-hidden mb-4 glass-card">
+                        <ProjectIcon type={project.type} className="h-20 w-20" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-4">
                           <div className="flex gap-2">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="h-8 border-zinc-700 bg-black/50 backdrop-blur-sm hover:border-red-600 hover:glow-red-sm"
-                            >
-                              <ExternalLink className="h-4 w-4 mr-2" /> View Live
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="h-8 border-zinc-700 bg-black/50 backdrop-blur-sm hover:border-red-600 hover:glow-red-sm"
-                            >
-                              <Github className="h-4 w-4 mr-2" /> Code
-                            </Button>
+                            <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="h-8 border-zinc-700 bg-black/50 backdrop-blur-sm hover:border-cyan-600 hover:glow-cyan-sm"
+                              >
+                                <Github className="h-4 w-4 mr-2" /> Code
+                              </Button>
+                            </Link>
                           </div>
+                        </div>
+                        {/* Project type indicator */}
+                        <div className="absolute top-3 left-3">
+                          <Badge className="bg-cyan-950/80 text-cyan-300 border-cyan-800/50 text-xs">
+                            {project.type}
+                          </Badge>
                         </div>
                       </div>
                       <div>
                         <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                        <p className="text-zinc-400 mb-4">{project.description}</p>
+                        <p className="text-zinc-400 mb-4 text-sm leading-relaxed">{project.description}</p>
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {project.technologies.map((tech, techIndex) => (
                           <Badge
                             key={techIndex}
                             variant="outline"
-                            className="border-red-800/50 bg-red-950/30 text-red-400 hover:bg-red-900/30 transition-colors"
+                            className="border-cyan-800/50 bg-cyan-950/30 text-cyan-400 hover:bg-cyan-900/30 transition-colors text-xs"
                           >
                             {tech}
                           </Badge>
@@ -249,7 +265,7 @@ export default function Home() {
 
             <div className="grid grid-cols-2 gap-8 mt-12 sm:grid-cols-3 md:grid-cols-4">
               {skillCategories.map((category, index) => (
-                <AnimatedSection key={index} delay={index * 0.1}>
+                <AnimatedSection key={index} delay={index * (isMobile ? 0.05 : 0.1)}>
                   <GlassCard className="h-full">
                     <h3 className="text-xl font-bold text-gradient mb-4">{category.name}</h3>
                     <ul className="space-y-2">
@@ -259,11 +275,11 @@ export default function Home() {
                           className="flex items-center gap-2"
                           initial={{ opacity: 0, x: -10 }}
                           whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ delay: skillIndex * 0.1, duration: 0.4 }}
+                          transition={{ delay: skillIndex * (isMobile ? 0.05 : 0.1), duration: isMobile ? 0.3 : 0.4 }}
                           viewport={{ once: true }}
-                          whileHover={{ x: 5, color: "#ff3333", transition: { duration: 0.2 } }}
+                          whileHover={isMobile ? {} : { x: 5, color: "#00cccc", transition: { duration: 0.2 } }}
                         >
-                          <div className="h-1.5 w-1.5 rounded-full bg-red-600" />
+                          <div className="h-1.5 w-1.5 rounded-full bg-cyan-600" />
                           <span className="text-zinc-300">{skill}</span>
                         </motion.li>
                       ))}
@@ -278,7 +294,7 @@ export default function Home() {
         {/* Contact Section */}
         <section id="contact" className="py-24 sm:py-32 relative border-t border-zinc-800/30">
           <div className="absolute inset-0 -z-10">
-            <div className="absolute inset-0 opacity-30 bg-gradient-to-t from-red-950/30 via-black to-black"></div>
+            <div className="absolute inset-0 opacity-30 bg-gradient-to-t from-cyan-950/30 via-black to-black"></div>
           </div>
           <div className="container">
             <AnimatedTitle>
@@ -294,7 +310,7 @@ export default function Home() {
 
             <div className="mx-auto mt-8 sm:mt-12 grid max-w-4xl gap-6 sm:gap-8 px-4 sm:px-6 md:px-0 md:grid-cols-2">
               <AnimatedSection delay={0.2}>
-                <GlassCard glowEffect={true} className="h-full">
+                <GlassCard glowEffect={!isMobile} className="h-full">
                   <h3 className="text-xl font-bold mb-4 sm:mb-6">Contact Information</h3>
                   <div className="space-y-3 sm:space-y-4">
                     {[
@@ -309,19 +325,23 @@ export default function Home() {
                       <motion.div
                         key={i}
                         className="flex items-center gap-3"
-                        whileHover={{
-                          x: 5,
-                          transition: { type: "spring", stiffness: 400, damping: 10 },
-                        }}
+                        whileHover={
+                          isMobile
+                            ? {}
+                            : {
+                                x: 5,
+                                transition: { type: "spring", stiffness: 400, damping: 10 },
+                              }
+                        }
                       >
-                        <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-red-950/30 flex items-center justify-center glow-red-sm">
-                          <item.icon className="h-4 w-4 sm:h-5 sm:w-5 text-red-500" />
+                        <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-cyan-950/30 flex items-center justify-center glow-cyan-sm">
+                          <item.icon className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-500" />
                         </div>
                         <Link
                           href={item.href}
                           target={item.href.startsWith("http") ? "_blank" : undefined}
                           rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                          className="hover:text-red-400 transition-colors text-sm sm:text-base truncate"
+                          className="hover:text-cyan-400 transition-colors text-sm sm:text-base truncate"
                         >
                           {item.text}
                         </Link>
@@ -332,7 +352,7 @@ export default function Home() {
               </AnimatedSection>
 
               <AnimatedSection delay={0.4}>
-                <GlassCard glowEffect={true}>
+                <GlassCard glowEffect={!isMobile}>
                   <ContactForm />
                 </GlassCard>
               </AnimatedSection>
@@ -353,12 +373,12 @@ export default function Home() {
               { Icon: Linkedin, href: "https://www.linkedin.com/in/samrou-teouri/" },
               { Icon: Mail, href: "mailto:teourisamrou@gmail.com" },
             ].map(({ Icon, href }, i) => (
-              <motion.div key={i} whileHover={{ y: -3, scale: 1.1 }}>
+              <motion.div key={i} whileHover={isMobile ? {} : { y: -3, scale: 1.1 }}>
                 <Link
                   href={href}
                   target={href.startsWith("http") ? "_blank" : undefined}
                   rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="text-zinc-400 hover:text-red-500 transition-colors duration-300"
+                  className="text-zinc-400 hover:text-cyan-500 transition-colors duration-300"
                 >
                   <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
                   <span className="sr-only">{Icon.name}</span>
@@ -372,55 +392,61 @@ export default function Home() {
   )
 }
 
-// Sample data
+// Your actual projects with visual previews
 const projects = [
   {
-    title: "E-Commerce Platform",
-    description: "A full-stack e-commerce solution with payment integration",
-    technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+    title: "Eyes OTC API",
+    description:
+      "An API system for managing and responding to city incidents, providing efficient incident tracking and response coordination for municipal services.",
+    technologies: ["Node.js", "Express", "REST API", "Database", "Incident Management"],
+    githubUrl: "https://github.com/samTeouri/eyes-otc-api",
+    image: "/placeholder.svg?height=300&width=500&text=API+Dashboard+%7C+Incident+Management+System",
+    type: "API",
   },
   {
-    title: "Task Management App",
-    description: "A collaborative task management application with real-time updates",
-    technologies: ["Next.js", "Firebase", "Tailwind CSS"],
+    title: "Barge Transport Simulator",
+    description:
+      "A sophisticated simulation system for barge transportation logistics and operations, optimizing routes and cargo management.",
+    technologies: ["Python", "Simulation", "Data Analysis", "Logistics"],
+    githubUrl: "https://github.com/samTeouri/barge-transport-simulator",
+    image: "/placeholder.svg?height=300&width=500&text=Transport+Simulation+%7C+Logistics+Dashboard",
+    type: "Simulation",
   },
   {
-    title: "Portfolio Website",
-    description: "A responsive portfolio website to showcase projects",
-    technologies: ["React", "Three.js", "GSAP"],
+    title: "Othello AI",
+    description:
+      "An intelligent AI implementation for the classic Othello board game with advanced algorithms and strategic gameplay analysis.",
+    technologies: ["Python", "AI/ML", "Game Theory", "Algorithms"],
+    githubUrl: "https://github.com/samTeouri/othello-ai",
+    image: "/placeholder.svg?height=300&width=500&text=Othello+Game+%7C+AI+Strategy+Board",
+    type: "AI/Game",
   },
   {
-    title: "Social Media Dashboard",
-    description: "Analytics dashboard for social media performance",
-    technologies: ["Vue.js", "D3.js", "Express"],
-  },
-  {
-    title: "Mobile Fitness App",
-    description: "A cross-platform fitness tracking application",
-    technologies: ["React Native", "GraphQL", "TypeScript"],
-  },
-  {
-    title: "AI Content Generator",
-    description: "Content generation tool powered by machine learning",
-    technologies: ["Python", "TensorFlow", "FastAPI"],
+    title: "CPL Mon Avenir",
+    description:
+      "A comprehensive web application for school management, handling student records, scheduling, administrative tasks, and academic planning.",
+    technologies: ["Laravel", "PHP", "PostgreSQL", "Web Development", "School Management"],
+    githubUrl: "https://github.com/samTeouri/CPLMonAvenir",
+    image: "/placeholder.svg?height=300&width=500&text=School+Management+%7C+Student+Dashboard",
+    type: "Web App",
   },
 ]
 
 const skillCategories = [
   {
     name: "Frontend",
-    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Three.js"],
+    skills: ["Vue.js", "Bootstrap", "Tailwind CSS", "JavaScript", "HTML/CSS"],
   },
   {
     name: "Backend",
-    skills: ["Node.js", "Express", "Python", "Django", "GraphQL"],
+    skills: ["Node.js", "Express", "TypeScript", "Java", "Python", "Django", "REST APIs"],
   },
   {
     name: "Database",
-    skills: ["MongoDB", "PostgreSQL", "Firebase", "Redis", "Prisma"],
+    skills: ["MongoDB", "PostgreSQL", "Firebase", "MySQL"],
   },
   {
     name: "DevOps",
-    skills: ["Docker", "AWS", "CI/CD", "Kubernetes", "Vercel"],
+    skills: ["Docker", "Linux", "BASH", "Nginx", "Apache", "CI/CD"],
   },
 ]

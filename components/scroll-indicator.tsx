@@ -20,9 +20,9 @@ export function ScrollIndicator() {
           repeat: Number.POSITIVE_INFINITY,
           repeatType: "loop",
         }}
-        className="p-2 rounded-full bg-red-950/20 glass-dark glow-red-sm"
+        className="p-2 rounded-full bg-cyan-950/20 glass-dark glow-cyan-sm"
       >
-        <ChevronDown className="h-6 w-6 text-red-600" />
+        <ChevronDown className="h-6 w-6 text-cyan-600" />
       </motion.div>
     </motion.div>
   )

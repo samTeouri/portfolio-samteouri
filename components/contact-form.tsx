@@ -49,7 +49,7 @@ export function ContactForm() {
           <input
             id="name"
             name="name"
-            className={`w-full rounded-md border ${state.errors?.name ? "border-red-600" : "border-zinc-800"} bg-zinc-950/50 glass-dark px-3 py-2 text-xs sm:text-sm transition-all focus:border-red-600 focus:outline-none focus:ring-1 focus:ring-red-600 focus:glow-red-sm`}
+            className={`w-full rounded-md border ${state.errors?.name ? "border-red-600" : "border-zinc-800"} bg-zinc-950/50 glass-dark px-3 py-2 text-xs sm:text-sm transition-all focus:border-cyan-600 focus:outline-none focus:ring-1 focus:ring-cyan-600 focus:glow-cyan-sm`}
             placeholder="Your Name"
           />
           {state.errors?.name && <p className="text-red-500 text-xs mt-1">{state.errors.name[0]}</p>}
@@ -62,7 +62,7 @@ export function ContactForm() {
             id="email"
             name="email"
             type="email"
-            className={`w-full rounded-md border ${state.errors?.email ? "border-red-600" : "border-zinc-800"} bg-zinc-950/50 glass-dark px-3 py-2 text-xs sm:text-sm transition-all focus:border-red-600 focus:outline-none focus:ring-1 focus:ring-red-600 focus:glow-red-sm`}
+            className={`w-full rounded-md border ${state.errors?.email ? "border-red-600" : "border-zinc-800"} bg-zinc-950/50 glass-dark px-3 py-2 text-xs sm:text-sm transition-all focus:border-cyan-600 focus:outline-none focus:ring-1 focus:ring-cyan-600 focus:glow-cyan-sm`}
             placeholder="your.email@example.com"
           />
           {state.errors?.email && <p className="text-red-500 text-xs mt-1">{state.errors.email[0]}</p>}
@@ -75,7 +75,7 @@ export function ContactForm() {
         <textarea
           id="message"
           name="message"
-          className={`w-full rounded-md border ${state.errors?.message ? "border-red-600" : "border-zinc-800"} bg-zinc-950/50 glass-dark px-3 py-2 text-xs sm:text-sm transition-all focus:border-red-600 focus:outline-none focus:ring-1 focus:ring-red-600 focus:glow-red-sm`}
+          className={`w-full rounded-md border ${state.errors?.message ? "border-red-600" : "border-zinc-800"} bg-zinc-950/50 glass-dark px-3 py-2 text-xs sm:text-sm transition-all focus:border-cyan-600 focus:outline-none focus:ring-1 focus:ring-cyan-600 focus:glow-cyan-sm`}
           rows={4}
           placeholder="Your message..."
         />
@@ -84,7 +84,7 @@ export function ContactForm() {
       <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
         <Button
           type="submit"
-          className="bg-gradient-to-r from-red-700 to-red-600 hover:from-red-600 hover:to-red-500 border-0 w-full glow-red-sm hover:glow-red text-sm sm:text-base"
+          className="bg-gradient-to-r from-cyan-700 to-cyan-600 hover:from-cyan-600 hover:to-cyan-500 border-0 w-full glow-cyan-sm hover:glow-cyan text-sm sm:text-base"
           disabled={isSubmitting}
         >
           {isSubmitting ? (
