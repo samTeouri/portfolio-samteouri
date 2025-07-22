@@ -10,9 +10,10 @@ interface AnimatedSectionProps {
   children: React.ReactNode
   className?: string
   delay?: number
+  id?: string
 }
 
-export function AnimatedSection({ children, className = "", delay = 0 }: AnimatedSectionProps) {
+export function AnimatedSection({ children, className = "", delay = 0, id }: AnimatedSectionProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, amount: 0.2 })
   const isMobile = useMobile()
@@ -39,7 +40,7 @@ export function AnimatedSection({ children, className = "", delay = 0 }: Animate
       }
 
   return (
-    <motion.div ref={ref} {...animationProps} className={`relative ${className}`}>
+    <motion.div ref={ref} {...animationProps} className={`relative ${className}`} id={id}>
       {!isMobile && (
         <motion.div
           initial={{ opacity: 0 }}
