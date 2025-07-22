@@ -8,7 +8,6 @@ import { useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { AnimatedSection, AnimatedTitle } from "@/components/animated-section"
-import { AnimatedList } from "@/components/animated-list"
 import { HeroAnimation } from "@/components/hero-animation"
 import { ScrollIndicator } from "@/components/scroll-indicator"
 import { ParallaxBackground } from "@/components/parallax-background"
@@ -16,9 +15,10 @@ import { ScrollProgress } from "@/components/scroll-progress"
 import { GlassCard } from "@/components/glass-card"
 import { ContactForm } from "@/components/contact-form"
 import { useMobile } from "@/hooks/use-mobile"
-import { SimpleBackgroundObjects } from "@/components/simple-background-objects"
+import { ThreeBackground } from "@/components/three-background"
+import { CSSBackgroundObjects } from "@/components/css-background-objects"
 import { ProjectIcon } from "@/components/project-icons"
-import { FallingStarsOrLogos } from "@/components/falling-stars-logos"
+// import { HeroGlobe } from "@/components/hero-globe"
 
 export default function Home() {
   const containerRef = useRef(null)
@@ -36,7 +36,8 @@ export default function Home() {
   return (
     <div ref={containerRef} className="flex min-h-screen flex-col bg-black text-white">
       <ParallaxBackground />
-      <SimpleBackgroundObjects />
+      <ThreeBackground />
+      <CSSBackgroundObjects />
       <ScrollProgress />
 
       {/* Navigation */}
@@ -60,7 +61,7 @@ export default function Home() {
               >
                 <Link
                   href={`#${item.toLowerCase()}`}
-                  className="transition-colors animated-underline"
+                  className="transition-colors hover:text-cyan-600 animated-underline"
                 >
                   {item}
                 </Link>
@@ -72,72 +73,118 @@ export default function Home() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <AnimatedSection id="about" className="relative overflow-hidden min-h-[calc(100vh-4rem)] flex items-center pt-0">
+        <section id="about" className="relative overflow-hidden min-h-[calc(100vh-4rem)] flex items-center pt-0">
           <div className="absolute inset-0 bg-black -z-10">
             <div className="absolute inset-0 opacity-40 bg-gradient-to-br from-cyan-950/50 via-black to-black"></div>
             <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-black to-transparent"></div>
           </div>
           <div className="container relative z-10">
-            <FallingStarsOrLogos count={100} />
             <HeroAnimation />
-            <AnimatedSection>
-              <motion.div style={{ opacity, scale }} className="flex min-h-screen items-center justify-center">
-                <div className="w-full md:w-1/2 space-y-4 text-center md:text-left">
-                  <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
-                    Hi, I'm <span className="text-gradient glow-text">Samrou TEOURI</span>
-                  </h1>
-                  <p className="text-lg sm:text-xl text-zinc-400">
-                    A passionate full-stack developer creating innovative web solutions
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+            <motion.div
+              className="flex flex-col items-center gap-8 md:flex-row md:gap-16"
+              style={isMobile ? {} : { opacity, scale }}
+            >
+              <div className="w-full md:w-1/2 space-y-4 text-center md:text-left">
+                <motion.h1
+                  className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl"
+                  initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: isMobile ? 0.5 : 0.7 }}
+                >
+                  Hi, I'm <span className="text-gradient glow-text">Samrou TEOURI</span>
+                </motion.h1>
+                <motion.p
+                  className="text-lg sm:text-xl text-zinc-400"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: isMobile ? 0.5 : 0.7, delay: 0.2 }}
+                >
+                  A passionate full-stack developer creating innovative web solutions
+                </motion.p>
+                <motion.div
+                  className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+                  initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: isMobile ? 0.3 : 0.5, delay: 0.4 }}
+                >
+                  <Button
+                    scrollToContact
+                    className={`w-full sm:w-auto bg-gradient-to-r from-cyan-700 to-cyan-600 hover:from-cyan-600 hover:to-cyan-500 border-0 glow-cyan-sm hover:glow-cyan ${!isMobile ? "pulse-animation" : ""}`}
+                  >
+                    Contact Me <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                  <Link
+                    href="https://cvdesignr.com/p/D0olpbKljrRmoVn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto"
+                  >
                     <Button
-                      scrollToContact
-                      className={`w-full sm:w-auto bg-gradient-to-r from-cyan-700 to-cyan-600 hover:from-cyan-600 hover:to-cyan-500 border-0 glow-cyan-sm hover:glow-cyan ${!isMobile ? "pulse-animation" : ""}`}
+                      variant="outline"
+                      className="w-full sm:w-auto border-zinc-800 hover:bg-zinc-900 hover:border-cyan-900 transition-all duration-300 bg-transparent"
                     >
-                      Contact Me <ArrowRight className="ml-2 h-4 w-4" />
+                      View Resume <ExternalLink className="ml-2 h-4 w-4" />
                     </Button>
-                    <Link
-                      href="https://cvdesignr.com/p/D0olpbKljrRmoVn"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full sm:w-auto"
+                  </Link>
+                </motion.div>
+                <motion.div
+                  className="flex gap-4 pt-4 justify-center md:justify-start"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: isMobile ? 0.3 : 0.5, delay: 0.6 }}
+                >
+                  {[
+                    { icon: Github, href: "https://github.com/samTeouri" },
+                    { icon: Linkedin, href: "https://www.linkedin.com/in/samrou-teouri/" },
+                    { icon: Mail, href: "mailto:teourisamrou@gmail.com" },
+                  ].map((item, i) => (
+                    <motion.div
+                      key={i}
+                      whileHover={
+                        isMobile
+                          ? {}
+                          : {
+                              scale: 1.1,
+                              transition: { duration: 0.2 },
+                            }
+                      }
                     >
-                      <Button
-                        variant="outline"
-                        className="w-full sm:w-auto border-zinc-800 hover:bg-zinc-900 hover:border-cyan-900 transition-all duration-300"
+                      <Link
+                        href={item.href}
+                        target={item.href.startsWith("http") ? "_blank" : undefined}
+                        rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                        className="text-zinc-400 hover:text-cyan-500 transition-colors duration-300 flex items-center justify-center h-10 w-10 rounded-full hover:bg-cyan-950/20"
                       >
-                        View Resume <ExternalLink className="ml-2 h-4 w-4" />
-                      </Button>
-                    </Link>
-                  </div>
-                  <div className="flex gap-4 pt-4 justify-center md:justify-start">
-                    {[
-                      { icon: Github, href: "https://github.com/samTeouri" },
-                      { icon: Linkedin, href: "https://www.linkedin.com/in/samrou-teouri/" },
-                      { icon: Mail, href: "mailto:teourisamrou@gmail.com" },
-                    ].map((item, i) => (
-                      <div
-                        key={i}
-                        className="transition-transform duration-200 hover:scale-110"
-                      >
-                        <Link
-                          href={item.href}
-                          target={item.href.startsWith("http") ? "_blank" : undefined}
-                          rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                          className="text-zinc-400 hover:text-cyan-500 transition-colors duration-300 flex items-center justify-center h-10 w-10 rounded-full hover:bg-cyan-950/20"
-                        >
-                          <item.icon className="h-6 w-6 micro-bounce micro-pulse micro-glow" />
-                          <span className="sr-only">{item.icon.name}</span>
-                        </Link>
-                      </div>
-                    ))}
+                        <item.icon className="h-6 w-6" />
+                        <span className="sr-only">{item.icon.name}</span>
+                      </Link>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+              <motion.div
+                className="w-full md:w-1/2 max-w-[300px] mx-auto md:max-w-none"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  duration: isMobile ? 0.5 : 0.7,
+                  delay: 0.3,
+                  type: "spring",
+                  stiffness: 100,
+                }}
+              >
+                <div className="aspect-square rounded-full gradient-cyan-to-black p-1 glow-cyan">
+                  <div className="h-full w-full rounded-full bg-zinc-900/50 glass-dark p-4">
+                    <div className="h-full w-full rounded-full bg-zinc-800/50 glass flex items-center justify-center text-6xl font-bold">
+                      ST
+                    </div>
                   </div>
                 </div>
               </motion.div>
-              <ScrollIndicator />
-            </AnimatedSection>
+            </motion.div>
+            <ScrollIndicator />
           </div>
-        </AnimatedSection>
+        </section>
 
         {/* Projects Section */}
         <section id="projects" className="py-24 sm:py-32 gradient-dark relative">
@@ -156,57 +203,58 @@ export default function Home() {
               </div>
             </AnimatedTitle>
 
-            <AnimatedList className="grid grid-cols-1 gap-6 mt-12 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 mt-12 md:grid-cols-2 lg:grid-cols-3">
               {projects.map((project, index) => (
-                <motion.div 
-                  key={index} 
-                  whileHover={isMobile ? {} : { y: -10, transition: { duration: 0.3 } }} 
-                  className="h-full"
-                >
-                  <GlassCard glowEffect={!isMobile} hoverEffect={!isMobile} className="h-full">
-                    <div className="aspect-video w-full bg-zinc-800/50 relative group rounded-md overflow-hidden mb-4 glass-card">
-                      <ProjectIcon type={project.type} className="h-20 w-20" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-4">
-                        <div className="flex gap-2">
-                          <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="h-8 border-zinc-700 bg-black/50 backdrop-blur-sm hover:border-cyan-600 hover:glow-cyan-sm"
-                            >
-                              <Github className="h-4 w-4 mr-2" /> View Code
-                            </Button>
-                          </Link>
+                <AnimatedSection key={index} delay={index * (isMobile ? 0.05 : 0.1)}>
+                  <motion.div whileHover={isMobile ? {} : { y: -10, transition: { duration: 0.3 } }} className="h-full">
+                    <GlassCard glowEffect={!isMobile} hoverEffect={!isMobile} className="h-full">
+                      <div className="aspect-video w-full bg-zinc-800/50 relative group rounded-md overflow-hidden mb-4 glass-card">
+                        <ProjectIcon type={project.type} className="h-20 w-20" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-4">
+                          <div className="flex gap-2">
+                            <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="h-8 border-zinc-700 bg-black/50 backdrop-blur-sm hover:border-cyan-600 hover:glow-cyan-sm"
+                              >
+                                <Github className="h-4 w-4 mr-2" /> Code
+                              </Button>
+                            </Link>
+                          </div>
+                        </div>
+                        {/* Project type indicator */}
+                        <div className="absolute top-3 left-3">
+                          <Badge className="bg-cyan-950/80 text-cyan-300 border-cyan-800/50 text-xs">
+                            {project.type}
+                          </Badge>
                         </div>
                       </div>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                      <p className="text-zinc-400 text-sm mb-4">{project.description}</p>
+                      <div>
+                        <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                        <p className="text-zinc-400 mb-4 text-sm leading-relaxed">{project.description}</p>
+                      </div>
                       <div className="flex flex-wrap gap-2">
-                        {project.technologies.map((tech, i) => (
-                          <Badge 
-                            key={i} 
-                            variant="outline" 
-                            className="text-xs border-cyan-800/50 bg-cyan-950/30 text-cyan-400 hover:bg-cyan-900/30 transition-colors"
+                        {project.technologies.map((tech, techIndex) => (
+                          <Badge
+                            key={techIndex}
+                            variant="outline"
+                            className="border-cyan-800/50 bg-cyan-950/30 text-cyan-400 hover:bg-cyan-900/30 transition-colors text-xs"
                           >
                             {tech}
                           </Badge>
                         ))}
                       </div>
-                    </div>
-                  </GlassCard>
-                </motion.div>
+                    </GlassCard>
+                  </motion.div>
+                </AnimatedSection>
               ))}
-            </AnimatedList>
+            </div>
           </div>
         </section>
 
         {/* Skills Section */}
         <section id="skills" className="py-24 sm:py-32 relative border-t border-zinc-800/30">
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute inset-0 opacity-30 bg-gradient-to-t from-cyan-950/30 via-black to-black"></div>
-          </div>
           <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black via-zinc-950 to-black opacity-80"></div>
           <div className="container">
             <AnimatedTitle>
@@ -335,7 +383,7 @@ export default function Home() {
                   rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="text-zinc-400 hover:text-cyan-500 transition-colors duration-300"
                 >
-                  <Icon className="h-4 w-4 sm:h-5 sm:w-5 micro-bounce micro-pulse micro-glow" />
+                  <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
                   <span className="sr-only">{Icon.name}</span>
                 </Link>
               </motion.div>
