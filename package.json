@@ -1,9 +1,12 @@
 {
-  "name": "my-v0-project",
+  "name": "portfolio",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "build": "next build",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start"
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start"
@@ -41,7 +44,6 @@
     "@react-three/drei": "^10.5.1",
     "@react-three/fiber": "latest",
     "@supabase/supabase-js": "latest",
-    "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "latest",

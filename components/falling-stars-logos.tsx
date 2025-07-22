@@ -132,6 +132,7 @@ export function FallingStarsOrLogos({ count = 16 }: { count?: number }) {
   const centerX = 50
   const centerY = 55
 
+
   // Générer les objets animés
   function getItems(count: number) {
     return Array.from({ length: count }, (_, i) => {
@@ -248,7 +249,7 @@ export function FallingStarsOrLogos({ count = 16 }: { count?: number }) {
                 transformOrigin: "50% 100%",
                 zIndex: 0,
                 pointerEvents: "none",
-                animation: `trail-${item.id} ${item.duration}s cubic-bezier(0.4,0.1,1,1) ${item.delay}s infinite`,
+                animation: `trail-${item.id} ${item.duration}s ease-out ${item.delay}s infinite`,
               }}
             />
             {/* Flash rapide au centre */}
@@ -265,7 +266,7 @@ export function FallingStarsOrLogos({ count = 16 }: { count?: number }) {
                 transform: "translate(-50%, -50%) scale(0.7)",
                 pointerEvents: "none",
                 zIndex: 1,
-                animation: `flash-${item.id} ${item.duration}s cubic-bezier(0.4,0.1,1,1) ${item.delay}s infinite`,
+                animation: `flash-${item.id} ${item.duration}s ease-out ${item.delay}s infinite`,
               }}
             />
             <style>{`@keyframes flash-${item.id} {
