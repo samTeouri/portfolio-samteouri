@@ -83,12 +83,36 @@ body {
     box-shadow: inset 0 0 0 1px rgba(0, 255, 255, 0.3), 0 0 0 1px rgba(0, 255, 255, 0.3);
   }
 
-  /* Glass morphism */
+  /* Glass morphism amélioré avec effet de lueur dynamique */
   .glass {
     background: rgba(0, 20, 20, 0.2);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(0, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at center,
+      rgba(0, 255, 255, 0.1) 0%,
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  .glass:hover::before {
+    opacity: 1;
+    animation: moveGlow 8s infinite linear;
   }
 
   .glass-dark {
@@ -96,14 +120,148 @@ body {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(0, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
   }
 
+  .glass-dark::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at center,
+      rgba(0, 200, 255, 0.08) 0%,
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  .glass-dark:hover::before {
+    opacity: 0.6;
+    animation: moveGlow 10s infinite linear reverse;
+  }
+
+  /* Effet Glass Card amélioré avec lueur dynamique */
   .glass-card {
     background: rgba(0, 20, 20, 0.1);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(0, 255, 255, 0.1);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at center,
+      rgba(0, 255, 255, 0.12) 0%,
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    animation: moveGlow 12s infinite linear;
+  }
+
+  .glass-card:hover {
+    border-color: rgba(0, 255, 255, 0.2);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5),
+                0 0 30px 0 rgba(0, 255, 255, 0.15);
+  }
+
+  .glass-card:hover::before {
+    opacity: 0.7;
+  }
+
+  @keyframes moveGlow {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+      transform: translate(25%, 25%) rotate(90deg);
+    }
+    50% {
+      transform: translate(0, 50%) rotate(180deg);
+    }
+    75% {
+      transform: translate(-25%, 25%) rotate(270deg);
+    }
+    100% {
+      transform: translate(0, 0) rotate(360deg);
+    }
+  }
+
+  /* Scrollbar personnalisée */
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 255, 255, 0.3) transparent;
+  }
+
+  /* Chrome, Edge et Safari */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 10, 15, 0.2);
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(0, 255, 255, 0.3), rgba(0, 180, 180, 0.6));
+    border-radius: 5px;
+    border: 1px solid rgba(0, 255, 255, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(0, 255, 255, 0.5), rgba(0, 200, 200, 0.8));
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(180deg, rgba(0, 220, 255, 0.7), rgba(0, 150, 255, 0.9));
+  }
+
+  /* Barre de défilement personnalisée pour les éléments avec défilement */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 255, 255, 0.3) transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(0, 5, 10, 0.1);
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(0, 200, 255, 0.25), rgba(0, 150, 200, 0.5));
+    border-radius: 4px;
+    border: 1px solid rgba(0, 255, 255, 0.1);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(0, 220, 255, 0.4), rgba(0, 180, 220, 0.7));
   }
 
   /* Parallax and scroll effects */
