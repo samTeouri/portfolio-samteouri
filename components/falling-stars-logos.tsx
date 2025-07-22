@@ -71,21 +71,14 @@ function getRandomItems(count: number) {
 }
 
 export function FallingStarsOrLogos({ count = 16 }: { count?: number }) {
-  // Détection simple mobile (SSR safe)
-  const isMobile = typeof window !== "undefined" ? window.innerWidth < 640 : false;
   // Paramètres dynamiques
-  const mobileCount = 24;
-  const desktopCount = count;
-  const usedCount = isMobile ? mobileCount : desktopCount;
-  const minSize = isMobile ? 16 : 24;
-  const maxSize = isMobile ? 28 : 48;
-  const minDist = isMobile ? 200 : 450;
-  const maxDist = isMobile ? 320 : 650;
-  const minDuration = isMobile ? 1.2 : 1.8;
-  const maxDuration = isMobile ? 2.0 : 2.2;
-  // Centre de la div (en %)
-  const centerX = 50;
-  const centerY = 55;
+  const usedCount = count;
+  const minSize = 24;
+  const maxSize = 48;
+  const minDist = 450;
+  const maxDist = 650;
+  const minDuration = 1.8;
+  const maxDuration = 2.2;
 
   // Générer les objets animés
   function getItems(count: number) {
@@ -115,44 +108,9 @@ export function FallingStarsOrLogos({ count = 16 }: { count?: number }) {
   }
   const itemsRef = useRef(getItems(usedCount))
   useEffect(() => { itemsRef.current = getItems(usedCount) }, [usedCount])
-  // Parallax state (x, y in [-1, 1])
-  const [parallax, setParallax] = React.useState({ x: 0, y: 0 })
-  // Handler
-  React.useEffect(() => {
-    function handle(e: MouseEvent | TouchEvent) {
-      let clientX, clientY
-      if ('touches' in e && e.touches.length > 0) {
-        clientX = e.touches[0].clientX
-        clientY = e.touches[0].clientY
-      } else if ('clientX' in e) {
-        clientX = e.clientX
-        clientY = e.clientY
-      } else return
-      const w = window.innerWidth
-      const h = window.innerHeight
-      setParallax({
-        x: ((clientX / w) - 0.5) * 2,
-        y: ((clientY / h) - 0.5) * 2,
-      })
-    }
-    window.addEventListener('mousemove', handle)
-    window.addEventListener('touchmove', handle)
-    return () => {
-      window.removeEventListener('mousemove', handle)
-      window.removeEventListener('touchmove', handle)
-    }
-  }, [])
-  // Décalage max (px) — sensibilité augmentée
-  const maxOffset = 60
+  // Pas d'effet de parallaxe
   return (
-    <div
-      className="pointer-events-none absolute inset-0 w-full h-full overflow-visible z-0"
-      style={{
-        transform: `translate(${parallax.x * maxOffset}px, ${parallax.y * maxOffset}px)`,
-        transition: 'transform 0.18s cubic-bezier(.4,.2,.6,1)',
-        willChange: 'transform',
-      }}
-    >
+    <div className="pointer-events-none absolute inset-0 w-full h-full overflow-visible z-0">
       {/* Vignettage/flou de profondeur */}
       <div
         style={{
@@ -235,7 +193,7 @@ export function FallingStarsOrLogos({ count = 16 }: { count?: number }) {
                 transformOrigin: "50% 100%",
                 zIndex: 0,
                 pointerEvents: "none",
-                animation: `trail-${item.id} ${item.duration}s cubic-bezier(0.4,0.1,1,1) ${item.delay}s infinite`,
+                animation: `trail-${item.id} ${item.duration}s ease-out ${item.delay}s infinite`,
               }}
             />
             {/* Flash rapide au centre */}
@@ -252,7 +210,7 @@ export function FallingStarsOrLogos({ count = 16 }: { count?: number }) {
                 transform: "translate(-50%, -50%) scale(0.7)",
                 pointerEvents: "none",
                 zIndex: 1,
-                animation: `flash-${item.id} ${item.duration}s cubic-bezier(0.4,0.1,1,1) ${item.delay}s infinite`,
+                animation: `flash-${item.id} ${item.duration}s ease-out ${item.delay}s infinite`,
               }}
             />
             <style>{`@keyframes flash-${item.id} {
